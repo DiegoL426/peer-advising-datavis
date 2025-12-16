@@ -40,8 +40,9 @@
 
             for (const meeting of manager.data){
                 let date = meeting["Start time"];
+                let helper = meeting["Being Helped By"];
 
-                if (date){
+                if (date && helper){
                     if (dateCounts[date]){
                         dateCounts[date]++;
                      } else {
