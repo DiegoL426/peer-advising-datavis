@@ -14,6 +14,15 @@
                 manager.data = data;
             }
 
+            let url = 'data/csvjson.json'
+            fetch(url)
+                .then(res => {return res.json();})
+                .then(data => {
+                    console.log(data);
+                    computeLayout(data);
+                })
+                .catch(err => {console.error('Failed to fetch JSON:', err);});
+
             computeLayout([]);
             return Promise.resolve(manager.data);
         },
