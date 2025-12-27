@@ -1,10 +1,12 @@
 
 .container {
-  width: 1200px;
+  /*width: 1200px;*/
+  width:100vw;
 }
 
 #graphic {
   padding-top: 60px;
+  background-color: lavender;
 }
 
 
@@ -19,18 +21,18 @@
 
 .step {
   margin-bottom: 200px;
-  font-family: "TiemposTextWeb-Regular","Georgia";
-  font-size: 16px;
+  font-family: 'OpenSans',"Georgia";
+  font-size: 18px;
   line-height: 23px;
-  color: #767678;
+  color: #e4e4e4;
 }
 
 #sections .title {
-  font-family: Arial,Helvetica,"san-serif";
-  font-size: 16px;
+  font-family: 'EncodeSans',"san-serif";
+  font-size: 25px;
   font-weight: bold;
-  margin-bottom: 2px;
-  color: #262626;
+  margin-bottom: 15px;
+  color: #ffffff;
   line-height: 1.2em;
 }
 
@@ -92,3 +94,51 @@
 }
 
 
+.highlight {
+  position: relative;
+  display: inline-block;
+  font-family: 'MyFont', sans-serif;
+  
+}
+
+.highlight::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 80px;
+  background-color: #32006e;
+  left: -6px;     /* horizontal offset */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -1;    /* puts it behind the text */
+  
+}
+
+.highlight2 {
+  position: relative;
+  display: inline-block;
+  font-family: 'MyFont', sans-serif;
+  padding: 10px 8px; /* controls space between text and box */
+}
+
+.highlight2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #4b2e83;
+  z-index: -1;  
+}
+
+@font-face {
+  font-family: 'EncodeSans';
+  src: url('../fonts/EncodeSansNormal/EncodeSansNormal-900-Black.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('../fonts/OpenSans/Open\ Sans\ regular.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
