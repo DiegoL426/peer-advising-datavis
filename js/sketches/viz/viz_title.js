@@ -9,15 +9,13 @@
 
             const dateCounts = VizTitle.dateCounts(manager);
             this.doneLoading = true;
-            console.log(dateCounts);
+            
         },
 
         draw: function (p, manager, ai, progress) {
             if (!this.doneLoading){
                 VizTitle.preload(manager);
-            }
-
-            
+            }    
             
             var cx = (manager.offsetX || 0) + (manager.width || 600) / 2;
             var cy = (manager.offsetY || 0) + (manager.height || 520) / 3;
