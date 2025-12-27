@@ -31,17 +31,7 @@
             try { console.log('Renderer: delegating draw, ai=', ai); } catch (e) { }
 
             if (ai === 0 || ai === 1) {
-                window.VizTitle.draw(p, manager, ai, progress);
-                return;
-            }
-
-            if (ai >= 4 && ai < 7) {
-                window.VizScatter.draw(p, manager, ai, progress);
-                return;
-            }
-
-            if (ai === 7) {
-                window.VizBar.draw(p, manager, ai, progress);
+                window.VizDash.draw(p, manager, ai, progress);
                 return;
             }
         }
