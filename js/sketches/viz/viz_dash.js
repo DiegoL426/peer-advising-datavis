@@ -24,9 +24,9 @@
             this.missedNoShowCount = dataCounts.missedNoShowCount;
 
             this.doneLoading = true;
-            this.encodeSans = p.loadFont('../fonts/EncodeSansNormal/EncodeSansNormal-900-Black.ttf');
-            this.uniSans = p.loadFont('../fonts/UniSans/Fontfabric\ -\ UniSansRegular.otf');
-            this.openSans = p.loadFont('../fonts/OpenSans/Open\ Sans\ regular.ttf');
+            this.encodeSans = p.loadFont('fonts/EncodeSansNormal/EncodeSansNormal-900-Black.ttf');
+            this.uniSans = p.loadFont('fonts/UniSans/Fontfabric\ -\ UniSansRegular.otf');
+            this.openSans = p.loadFont('fonts/OpenSans/Open\ Sans\ regular.ttf');
 
             console.log(this.totalMeetCount + " " + this.helpedCount + " " + this.missedNoShowCount);
         },
