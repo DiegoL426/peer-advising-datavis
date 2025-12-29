@@ -1,7 +1,6 @@
 
 .container {
-  /*width: 1200px;*/
-  width:100vw;
+  width: 100%;
 }
 
 #graphic {

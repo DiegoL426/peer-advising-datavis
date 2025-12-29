@@ -49,12 +49,12 @@
             p.rectMode(p.TOP_LEFT);
             p.fill('#e2d7faff');
             p.strokeWeight(2);
-            p.rect(cx - 700, cy - 265, 700, 280, 10);
+            p.rect(cx - 700, cy - 265, 700, 280, 10); // box outline
             p.noStroke();
 
-            VizDash.drawQuickInsights(manager, p, cx, cy);
+            VizDash.drawQuickInsights(manager, p, cx, cy); //draw quick insights box
 
-            //STEP 2: TIMELINE (I guess?)
+            //STEP 2: TIMELINE
             VizDash.drawDateTimeLine(manager, p, cx, cy);
 
             p.pop();
@@ -62,11 +62,11 @@
 
         //Drawing Functions:-------------------------------------------------
 
-
-
         //Draws the quick insights box
         drawQuickInsights: function(manager, p, cx, cy){
             p.push();
+
+            //Title text
             p.textFont(this.encodeSans);
             p.fill(0,0,0);
             p.textAlign(p.LEFT);
@@ -88,6 +88,7 @@
             p.arc(arcX, arcY, arcRadius, arcRadius, p.radians(180), p.radians(180 + (180 * helpedPercent)));
             p.noStroke();
 
+            //Text in the arc
             p.textAlign(p.CENTER);
             p.textSize(50);
             p.fill(0,0,0);
@@ -97,12 +98,46 @@
             p.fill(100, 100, 100);
             p.text("Total Signups", arcX, arcY + 4);
 
-
+            //Completed vs incompleted meetings text
             p.textFont(this.openSans);
-            p.textSize(14);
-            p.text("Total Meetings: " + this.totalMeetCount, cx - 300, cy - 100);
-            p.text("Helped Meetings: " + this.helpedCount, cx - 300, cy - 70);
-            p.text("Missed/No-Show Meetings: " + this.missedNoShowCount, cx - 300, cy - 40);
+            p.textSize(20);
+            p.textAlign(p.LEFT);
+            p.text("Completed Meetings", cx - 210, cy - 214);
+            p.text("Incomplete Meetings", cx - 210, cy - 144);
+            
+            //legend circles
+            p.fill(100, 100, 250);
+            p.circle(cx - 350, cy - 220, 60);
+            p.fill('#FF6B6B');
+            p.circle(cx - 350, cy - 150, 60);
+
+            //Counts on each circle
+            p.fill(255);
+            p.textSize(20);
+            p.textAlign(p.CENTER);
+            p.textFont(this.encodeSans);
+            p.text(this.helpedCount, cx - 350, cy - 214);
+            p.text(this.missedNoShowCount, cx - 350, cy - 144);
+
+            //Lines from circle to text
+            p.stroke(100, 100, 100);
+            p.strokeWeight(1.5);
+            p.line(cx - 310, cy - 220, cx - 225, cy - 220);
+            p.line(cx - 310, cy - 150, cx - 225, cy - 150);
+            
+
+            //Completion rate circle 
+            let completionRate = ((this.helpedCount / this.totalMeetCount) * 100).toFixed(1);
+            p.noStroke();
+            p.fill('#4E944F');
+            p.circle(cx - 310, cy - 50, 80);
+            p.fill(255);
+            p.textSize(30);
+            p.textAlign(p.CENTER);
+            p.text(completionRate + "%", cx - 310, cy - 40);
+            p.textSize(20);
+            p.fill(0);
+            p.text("Completion Rate", cx - 150, cy - 50);
 
             p.pop();
 
@@ -116,8 +151,6 @@
             p.strokeWeight(2);
             p.line(cx - 700, cy+200, cx - 700, cy + 550);
             p.line(cx-700,cy+550, cx-300, cy + 550);
-
-            
             p.pop();
         },
 
