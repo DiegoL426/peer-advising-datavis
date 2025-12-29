@@ -135,14 +135,14 @@
 
 @font-face {
   font-family: 'UniSans';
-  src: url('../fonts/UniSans/Fontfabric\ -\ UniSansRegular.otf') format('woff2');
+  src: url('../fonts/UniSans/Uni-Sans-Regular.otf') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url('../fonts/OpenSans/Open\ Sans\ regular.ttf') format('woff2');
+  src: url('../fonts/OpenSans/Open-Sans-Regular.ttf') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
