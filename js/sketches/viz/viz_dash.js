@@ -47,17 +47,33 @@
 
             //STEP 1: Quick insights section
             p.rectMode(p.TOP_LEFT);
-            p.fill('#e2d7faff');
+            p.fill('#f4ecf9ff');
+            //p.fill('#E6DDF5');
+            //p.fill('#ecececff');
             p.strokeWeight(2);
-            p.rect(cx - 700, cy - 265, 700, 280, 10); // box outline
-            p.noStroke();
 
+            p.push();
+            p.drawingContext.shadowOffsetX = 4;
+            p.drawingContext.shadowOffsetY = 4;
+            p.drawingContext.shadowBlur = 10;
+            p.drawingContext.shadowColor = 'rgba(71, 71, 71, 0.3)';
+            p.rect(cx - 700, cy - 265, 700, 280, 10); // box outline
+            p.pop();
+
+            p.noStroke();
             VizDash.drawQuickInsights(manager, p, cx, cy); //draw quick insights box
 
             //STEP 2: TIMELINE
-            VizDash.drawDateTimeLine(manager, p, cx, cy);
-
+            p.push();
+            p.drawingContext.shadowOffsetX = 4;
+            p.drawingContext.shadowOffsetY = 4;
+            p.drawingContext.shadowBlur = 10;
+            p.drawingContext.shadowColor = 'rgba(71, 71, 71, 0.3)';
+            p.rectMode(p.TOP_LEFT);
+            p.rect(cx - 700, cy + 100, 700, 400, 10); // box outline
             p.pop();
+
+            //VizDash.drawDateTimeLine(manager, p, cx, cy);
         },
 
         //Drawing Functions:-------------------------------------------------
@@ -135,11 +151,6 @@
             p.line(cx - 310, cy - 205, cx - 220, cy - 205);
             p.line(cx - 310, cy - 125, cx - 220, cy - 125);
             p.line(cx - 310, cy - 45, cx - 220, cy - 45);
-            
-
-            //Completion rate circle 
-
-
             p.pop();
 
         },
