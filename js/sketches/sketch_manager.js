@@ -13,7 +13,7 @@ function startP5() {
         this.height = 720; // content height
         this.margin = { top: 0, left: 80, bottom: 40, right: 10 };
         // global horizontal shift (in pixels) applied to all p5 drawings
-        this.shiftX = 250;
+        this.shiftX = 300;
         // global vertical shift (in pixels) applied to all p5 drawings
         this.shiftY = 30;
         this.canvasWidth = this.width + this.margin.left + this.margin.right;

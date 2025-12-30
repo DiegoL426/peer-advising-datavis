@@ -70,7 +70,7 @@
             p.drawingContext.shadowBlur = 10;
             p.drawingContext.shadowColor = 'rgba(71, 71, 71, 0.3)';
             p.rectMode(p.TOP_LEFT);
-            p.rect(cx - 700, cy + 100, 700, 400, 10); // box outline
+            p.rect(cx - 700, cy + 80, 700, 400, 10); // box outline
             p.pop();
 
             //VizDash.drawDateTimeLine(manager, p, cx, cy);
