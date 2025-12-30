@@ -8,7 +8,11 @@
             var self = this;
 
             manager.offsetX = (manager.margin && manager.margin.left) || 20;
+            // apply global horizontal shift if present
+            manager.offsetX = manager.offsetX + (manager.shiftX || 0);
             manager.offsetY = (manager.margin && manager.margin.top) || 0;
+            // apply global vertical shift if present
+            manager.offsetY = manager.offsetY + (manager.shiftY || 0);
 
             function computeLayout(data) {
                 manager.data = data;

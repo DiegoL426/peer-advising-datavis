@@ -9,9 +9,13 @@ function startP5() {
     // --- Sketch manager ----------------------------------------------------
     function SketchManager() {
         // core layout settings (canvas size only)
-        this.width = 1350; // content width
-        this.height = 800; // content height
+        this.width = 800; // content width
+        this.height = 720; // content height
         this.margin = { top: 0, left: 80, bottom: 40, right: 10 };
+        // global horizontal shift (in pixels) applied to all p5 drawings
+        this.shiftX = 250;
+        // global vertical shift (in pixels) applied to all p5 drawings
+        this.shiftY = 30;
         this.canvasWidth = this.width + this.margin.left + this.margin.right;
         this.canvasHeight = this.height + this.margin.top + this.margin.bottom;
 
