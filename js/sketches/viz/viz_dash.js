@@ -270,7 +270,7 @@
                 if (this.missedDateView){
                     p.stroke('#FF6B6B');
                 } else {
-                    p.stroke(100, 100, 250);
+                    p.stroke('#6464FA');
                 }
 
                 //draw the bar
@@ -280,6 +280,14 @@
             }
 
             //data source buttons next to title
+
+            p.noStroke();   
+            p.fill('#6464FA');
+            //gradient fill for button
+            p.circle(cx - 250, cy + 90, 50);
+            
+
+
             p.pop();
         },
 
