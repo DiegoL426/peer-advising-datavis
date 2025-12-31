@@ -39,13 +39,11 @@
         },
 
         //rgba(94, 94, 94, 1);
-        draw: function (p, manager, ai, progress) {
+        draw: function (p, manager, ai, progress, cx, cy) {
             if (!this.doneLoading){
                 VizDash.preload(manager, p);
             }    
             
-            var cx = (manager.offsetX || 0) + (manager.width || 600) / 2;
-            var cy = (manager.offsetY || 0) + (manager.height || 520) / 3;
             p.push();
             p.noStroke();
             p.fill(0,0,0);
@@ -281,13 +279,58 @@
 
             //data source buttons next to title
 
-            p.noStroke();   
-            p.fill('#6464FA');
-            //gradient fill for button
-            p.circle(cx - 250, cy + 90, 50);
+            p.textFont(this.uniSans);
+            p.textAlign(p.CENTER);
+            p.textSize(15);
+            if (this.missedDateView){
+                p.stroke('#6464FA');
+                p.strokeWeight(2);
+                p.noFill();
+                p.rect(cx - 280, cy + 70, cx - 680, cy - 220, 25);
+                p.noStroke();
+                p.fill(`#FF6B6B`);
+                p.rect(cx - 150, cy + 70, cx - 680, cy - 220, 25);
+                p.fill(0);
+                p.text("See Complete", cx - 231, cy + 100);
+                p.fill(255);
+                p.text("See Incomplete", cx - 100, cy + 100);
+            } else {
+                p.stroke('#FF6B6B');
+                p.strokeWeight(2);
+                p.noFill();
+                p.rect(cx - 150, cy + 70, cx - 680, cy - 220, 25);
+                p.noStroke();
+                p.fill('#6464FA');
+                p.rect(cx - 280, cy + 70, cx - 680, cy - 220, 25);
+
+                p.fill(255);
+                p.text("See Complete", cx - 231, cy + 100);
+                p.fill(0);
+                p.text("See Incomplete", cx - 100, cy + 100);
+
+            }
             
+            if (p.mouseIsPressed){
+                if (
+                p.mouseX >= cx - 150 &&
+                p.mouseX <= cx - 150 + 130 &&
+                p.mouseY >= cy + 70 &&
+                p.mouseY <= cy + 70 + 30
+                ) {
+                    VizDash.missedDateView = true;
+                }
 
-
+                // See Complete
+                if (
+                    p.mouseX >= cx - 280 &&
+                    p.mouseX <= cx - 280 + 130 &&
+                    p.mouseY >= cy + 70 &&
+                    p.mouseY <= cy + 70 + 30
+                ) {
+                    VizDash.missedDateView = false;
+                }
+            }
+            
             p.pop();
         },
 
