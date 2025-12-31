@@ -34,8 +34,12 @@
         draw: function (p, manager, ai, progress) {
             try { console.log('Renderer: delegating draw, ai=', ai); } catch (e) { }
 
-            if (ai === 0 || ai === 1) {
+            if (ai == 1) {
                 window.VizDash.draw(p, manager, ai, progress);
+                return;
+            }
+            if (ai == 0) {
+                window.VizBar.draw(p, manager, ai, progress);
                 return;
             }
         }

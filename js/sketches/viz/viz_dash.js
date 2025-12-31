@@ -10,6 +10,10 @@
         helpedCount: 0,
         missedNoShowCount: 0,
         dateCounts: {},
+        missedDateCounts: {},
+
+        //booleans for timeline
+        missedDateView: false,
 
         preload: function (manager, p){
 
@@ -19,14 +23,17 @@
             this.totalMeetCount = (manager.data).length;
 
             let dataCounts = this.dataCountsGet(manager);
+
             this.helpedCount = dataCounts.helpedCount;
             this.dateCounts = dataCounts.dateCounts;
+            this.missedDateCounts = dataCounts.missedDateCounts;
             this.missedNoShowCount = dataCounts.missedNoShowCount;
 
             this.doneLoading = true;
             this.encodeSans = p.loadFont('fonts/EncodeSansNormal/EncodeSansNormal-900-Black.ttf');
             this.uniSans = p.loadFont('fonts/UniSans/Uni-Sans-Regular.otf');
             this.openSans = p.loadFont('fonts/OpenSans/Open-Sans-Regular.ttf');
+        
 
             console.log(this.totalMeetCount + " " + this.helpedCount + " " + this.missedNoShowCount);
         },
@@ -70,10 +77,10 @@
             p.drawingContext.shadowBlur = 10;
             p.drawingContext.shadowColor = 'rgba(71, 71, 71, 0.3)';
             p.rectMode(p.TOP_LEFT);
-            p.rect(cx - 700, cy + 80, 700, 400, 10); // box outline
+            p.rect(cx - 700, cy + 50, 700, 420, 10); // box outline
             p.pop();
 
-            //VizDash.drawDateTimeLine(manager, p, cx, cy);
+            VizDash.drawDateTimeLine(manager, p, cx, cy);
         },
 
         //Drawing Functions:-------------------------------------------------
@@ -99,7 +106,7 @@
             p.strokeWeight(10);
             p.stroke('#FF6B6B');
             p.arc(arcX, arcY, arcRadius, arcRadius, p.radians(180), p.radians(0));
-            p.stroke(100, 100, 250);
+            p.stroke('#6464FA');
             p.strokeWeight(10);
             p.arc(arcX, arcY, arcRadius, arcRadius, p.radians(180), p.radians(180 + (180 * helpedPercent)));
             p.noStroke();
@@ -158,11 +165,123 @@
         //Draws the timeline of dates
         drawDateTimeLine: function(manager, p, cx, cy){
             p.push()
+
+            //Title text
+            p.textFont(this.encodeSans);
+            p.fill(0,0,0);
+            p.textAlign(p.LEFT);
+            p.textSize(35);
+            p.text("Meetings Over Time", cx - 680, cy + 100);
+            p.textSize(18);
+            p.textFont(this.openSans);
+            p.fill('#505050');
+
+            if (this.missedDateView){
+                p.text("Number of missed/no-show meetings per day", cx - 680, cy + 130);
+            } else {
+                p.text("Number of completed meetings per day", cx - 680, cy + 130);
+            }
+
+            //Axes
             p.strokeCap(p.ROUND);
             p.stroke(187, 187, 187);
             p.strokeWeight(2);
-            p.line(cx - 700, cy+200, cx - 700, cy + 550);
-            p.line(cx-700,cy+550, cx-300, cy + 550);
+            p.line(cx - 650, cy+155, cx - 650, cy + 440); // Y axis
+            p.line(cx-650,cy+440, cx-38, cy + 440); // X axis
+
+            //texture box taking up the graph
+            p.push();
+            p.noStroke();
+            p.fill('#faeefdff');
+            p.rect(cx - 650, cy + 155, 612, 285);
+            p.pop();
+                
+            let dateCounts = this.dateCounts;
+            let missedDateCounts = this.missedDateCounts;
+
+            let dates = Object.keys(dateCounts);
+
+            let counts = [];
+            if (this.missedDateView){
+                counts = dates.map(date => missedDateCounts[date] || 0); // array of missed/no-show counts
+            } else {
+                counts = dates.map(date => dateCounts[date]); // array of counts
+            }
+            let maxCount = 15; // maximum count for scaling
+            
+            dates.sort((a,b) => new Date(a) - new Date(b)); //sort dates in ascending order
+            
+            //Y axis labels
+            p.fill(0,0,0);
+            p.textAlign(p.CENTER);
+            p.textSize(12);
+            p.noStroke();
+
+            p.text(maxCount.toString(), cx - 660, cy + 160);
+            p.text(Math.round(maxCount / 2).toString(), cx - 660, cy + 300);
+            p.text("0", cx - 660, cy + 445);
+
+            p.strokeWeight(1);
+            p.stroke(187, 187, 187);
+            p.line(cx - 650, cy + 297.5, cx - 38, cy + 300); //mid line
+            p.line(cx - 650, cy + 155, cx - 38, cy + 155); //top line
+
+            //X axis labels
+            p.textAlign(p.CENTER);
+            p.textSize(12);
+            p.noStroke();
+            p.text("Sept 15th", cx - 650, cy + 460); // first date
+            p.text("Dec 5th", cx - 38, cy + 460); // last date
+
+
+            //Building the timeline bars     
+            let timelineW = 600;
+            let timelineH = 285;
+            p.noStroke();
+            p.fill(80, 150, 200, 220);
+
+            // build a bar for each date, making its height based on the # of meetings on that date
+            for (let i = 0; i < dates.length; i++){
+                let date = dates[i];
+                let count = 0;
+                if (this.missedDateView) {
+                    count = missedDateCounts[date] || 0;
+                } else {
+                    count = dateCounts[date];
+                }
+                let x = (cx - 650 + (i / (dates.length - 1)) * timelineW) + 10;
+                let y = cy + 440 - (count / maxCount) * timelineH;
+
+                //x axis label in mid october and novemeber
+                if (date === "10/15/2025"){
+                    p.fill(0,0,0);
+                    p.textAlign(p.CENTER);
+                    p.textSize(12);
+                    p.noStroke();
+                    p.text("Oct 15th", x, cy + 460);
+                } else if (date === "11/14/2025"){
+                    p.fill(0,0,0);
+                    p.textAlign(p.CENTER);
+                    p.textSize(12);
+                    p.noStroke();
+                    p.text("Nov 14th", x, cy + 460);
+                }
+
+                if (this.missedDateView){
+                    p.stroke('#FF6B6B');
+                } else {
+                    p.stroke(100, 100, 250);
+                }
+
+                //draw the bar
+                p.strokeCap(p.SQUARE);
+                p.strokeWeight(4);
+                p.line(x, cy + 440, x, y);
+            }
+
+            //data source buttons next to title
+            p.fill()
+
             p.pop();
         },
 
@@ -171,10 +290,12 @@
 
         // This function iterates through every meeting in the data and gathers:
             //- dateCounts: an object where keys are dates and values are counts of helped meetings on that date
+            //- missedDateCounts: an object where keys are dates and values are counts of missed/no-show meetings on that date
             //- helpedCount: an integer with total number of helped meetings
             //- missedNoShowCount: an integer with total number of missed/no-show meetings
         dataCountsGet: function(manager){
             let dateCounts = {};
+            let missedDateCounts = {};
             let helpedCount = 0;
             let missedNoShowCount = 0;
 
@@ -191,9 +312,14 @@
                     }
                 } else {
                     missedNoShowCount++;
+                    if (missedDateCounts[date]){
+                        missedDateCounts[date]++;
+                    } else {
+                        missedDateCounts[date] = 1;
+                    }
                 }
             }
-            return {dateCounts, helpedCount, missedNoShowCount};
+            return {dateCounts, helpedCount, missedNoShowCount, missedDateCounts};
         }
     };
 })();
