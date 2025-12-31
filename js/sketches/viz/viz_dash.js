@@ -280,8 +280,6 @@
             }
 
             //data source buttons next to title
-            p.fill()
-
             p.pop();
         },
 
