@@ -4,6 +4,8 @@
     window.VizPart2 = {
 
         doneLoading: false, 
+
+        //raw counts
         totalMeetCount: 0,
         topicCounts: {},
         studentTypeCounts: {},
@@ -50,12 +52,12 @@
             p.textAlign(p.CENTER);
 
             //STEP 1: Squares for both sections 
+
             p.rectMode(p.TOP_LEFT);
             p.fill('#f4ecf9ff');
             //p.fill('#E6DDF5');
             //p.fill('#ecececff');
             p.strokeWeight(2);
-
             p.push();
             p.drawingContext.shadowOffsetX = 4;
             p.drawingContext.shadowOffsetY = 4;
@@ -69,8 +71,6 @@
             //Step 2: Top topics list
             p.noStroke();
             VizPart2.drawTopics(manager, p, cx, cy);
-
-
 
             //Step 3: Top student statuses list
             VizPart2.drawStatuses(manager, p, cx, cy);
@@ -88,11 +88,24 @@
             p.textSize(35);
             p.text("Topics", cx - 680, cy - 220);
 
+            let topicEntries = Object.entries(this.topicCounts); //
+            topicEntries.sort((a, b) => b[1] - a[1]);
+            VizPart2.drawDonutChart(p, cx - 200, cy - 65, 200, topicEntries);
 
-            VizPart2.drawDonutChart(p, cx - 200, cy - 65, 200, this.topicCounts);
-
-
-
+            p.textSize(20);
+            p.textFont(this.uniSans);
+            
+            let startY = 180;
+            let i = 0;
+            for (let topic of topicEntries){
+                p.fill(0);
+                p.text(topic[0] + " - " + topic[1],  cx - 650, cy - startY);
+                p.fill(this.SAMPLE_COLORS[i]);
+                p.rectMode(p.CENTER);
+                p.rect(cx - 670, (cy-startY) - 5, 20, 20);
+                startY-=50;
+                i++;
+            }
             p.pop();
         },
 
@@ -104,7 +117,26 @@
             p.textSize(35);
             p.text("Student Status", cx - 680, cy + 165);
 
-            VizPart2.drawDonutChart(p, cx - 530, cy + 65, 200, this.studentTypeCounts);
+            let statusEntries = Object.entries(this.studentTypeCounts)
+
+            statusEntries.sort((a, b) => b[1] - a[1]);
+            VizPart2.drawDonutChart(p, cx - 200, cy + 320, 200, statusEntries);
+
+            p.textSize(20);
+            p.textFont(this.uniSans);
+
+            //TODO: COLOR BOXES
+            let startY = 205;
+            let i = 0;
+            for (let status of statusEntries){
+                p.fill(0);
+                p.text(status[0] + " - " + status[1],  cx - 650, cy + startY);
+                p.fill(this.SAMPLE_COLORS[i]);
+                p.rectMode(p.CENTER);
+                p.rect(cx - 670, (cy + startY) - 5, 20,20);
+                startY+=50;
+                i++;
+            }
             p.pop();
         },
 
@@ -118,21 +150,21 @@
             let studentTypeCounts = {};
 
             // Selectable options on the google form, any topic that is not 
-                // one of these marked as "other"
-                let nonOtherTopics = [
-                    "Degree Requirements & Planning",
-                    "Graduation",
-                    "Minor",
-                    "Admissions/Application",
-                    "Registration"
-                ];
+            // one of these marked as "other" in the if statements marked: ***
+            let nonOtherTopics = [
+                "Degree Requirements & Planning",
+                "Graduation",
+                "Minor",
+                "Admissions/Application",
+                "Registration"
+            ];
 
-                let nonOtherStatuses = [
-                    "Current INFO Major",
-                    "INFO Major - Freshman Direct",
-                    "Prospective INFO Major",
-                    "INFO Minor"
-                ]
+            let nonOtherStatuses = [
+                "Current INFO Major",
+                "INFO Major - Freshman Direct",
+                "Prospective INFO Major",
+                "INFO Minor"
+            ];
 
             for (const meeting of manager.data){
 
@@ -144,6 +176,7 @@
                 let topics = topic.split(';');
 
                 for (let topic of topics){
+                    /*** Other if not included in the list of selectables on the google form*/
                     if (!nonOtherTopics.includes(topic)){
                         topic = "Other";
                     }
@@ -156,6 +189,7 @@
                 }
 
                 //Count student status types
+                /*** Other if not included in the list of selectables on the google form*/
                 if (!nonOtherStatuses.includes(studentType)){
                     studentType = "Other";
                 }
@@ -170,9 +204,9 @@
             return {topicCounts, studentTypeCounts};
         },
 
-        drawDonutChart: function (p, x, y, diameter, values) {
+        drawDonutChart: function (p, x, y, diameter, entries) {
+            p.push();
 
-            let entries = Object.entries(values);
             let angleStart = -p.HALF_PI;
 
             let total = entries.reduce((sum, e) => sum + e[1], 0); 
@@ -193,7 +227,7 @@
             for (let i = 0; i < entries.length; i++) {
                 p.strokeWeight(55);
                 p.noFill();
-                let label = entries[i][0];
+
                 let count = entries[i][1];
 
                 let angle = (count / total) * p.TWO_PI;
@@ -235,6 +269,7 @@
 
                 angleStart += angle;
             }
+            p.pop();
         }
     };
 })();
