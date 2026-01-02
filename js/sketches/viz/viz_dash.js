@@ -29,13 +29,11 @@
             this.missedDateCounts = dataCounts.missedDateCounts;
             this.missedNoShowCount = dataCounts.missedNoShowCount;
 
-            this.doneLoading = true;
             this.encodeSans = p.loadFont('fonts/EncodeSansNormal/EncodeSansNormal-900-Black.ttf');
             this.uniSans = p.loadFont('fonts/UniSans/Uni-Sans-Regular.otf');
             this.openSans = p.loadFont('fonts/OpenSans/Open-Sans-Regular.ttf');
         
-
-            console.log(this.totalMeetCount + " " + this.helpedCount + " " + this.missedNoShowCount);
+            this.doneLoading = true;
         },
 
         //rgba(94, 94, 94, 1);

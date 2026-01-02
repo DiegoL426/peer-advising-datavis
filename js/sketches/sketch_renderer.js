@@ -37,14 +37,21 @@
             var cx = (manager.offsetX || 0) + (manager.width || 600) / 2;
             var cy = (manager.offsetY || 0) + (manager.height || 520) / 3;
 
-            if (ai == 1) {
-                window.VizDash.draw(p, manager, ai, progress, cx, cy);
-                return;
-            }
             if (ai == 0) {
                 window.VizBar.draw(p, manager, ai, progress);
                 return;
             }
-        },
+
+            if (ai == 1) {
+                window.VizDash.draw(p, manager, ai, progress, cx, cy);
+                return;
+            }
+
+            if (ai == 2) {
+                window.VizPart2.draw(p, manager, ai, progress, cx, cy);
+                return;
+            }
+
+        }
     };
 })();
