@@ -33,7 +33,29 @@
             }
 
             p.push();
+            // STEP 1: Top meeting topics list 
+
+            p.noStroke();
+            p.fill(0,0,0);
             
+            p.textAlign(p.CENTER);
+
+            //STEP 1: Quick insights section
+            p.rectMode(p.TOP_LEFT);
+            p.fill('#f4ecf9ff');
+            //p.fill('#E6DDF5');
+            //p.fill('#ecececff');
+            p.strokeWeight(2);
+
+            p.push();
+            p.drawingContext.shadowOffsetX = 4;
+            p.drawingContext.shadowOffsetY = 4;
+            p.drawingContext.shadowBlur = 10;
+            p.drawingContext.shadowColor = 'rgba(71, 71, 71, 0.3)';
+            p.rect()
+            p.pop();
+
+            p.noStroke();
 
             p.pop()
         },
