@@ -245,6 +245,7 @@
                 } else {
                     count = dateCounts[date];
                 }
+
                 let x = (cx - 650 + (i / (dates.length - 1)) * timelineW) + 10;
                 let y = cy + 440 - (count / maxCount) * timelineH;
 
@@ -276,10 +277,10 @@
             }
 
             //data source buttons next to title
-
             p.textFont(this.uniSans);
             p.textAlign(p.CENTER);
             p.textSize(15);
+
             if (this.missedDateView){
                 p.stroke('#6464FA');
                 p.strokeWeight(2);
@@ -308,6 +309,7 @@
 
             }
             
+            //button clicking logic
             if (p.mouseIsPressed){
                 if (
                 p.mouseX >= cx - 150 &&
@@ -328,7 +330,6 @@
                     VizDash.missedDateView = false;
                 }
             }
-            
             p.pop();
         },
 
