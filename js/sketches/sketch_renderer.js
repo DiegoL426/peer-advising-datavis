@@ -38,7 +38,7 @@
             var cy = (manager.offsetY || 0) + (manager.height || 520) / 3;
 
             if (ai == 0) {
-                window.VizBar.draw(p, manager, ai, progress);
+                window.VizTitle.draw(p, manager, ai, progress, cx, cy);
                 return;
             }
 
@@ -49,6 +49,10 @@
 
             if (ai == 2) {
                 window.VizPart2.draw(p, manager, ai, progress, cx, cy);
+                return;
+            }
+            if (ai == 3){
+                window.VizEnd.draw(p, manager, ai, progress, cx, cy);
                 return;
             }
 
