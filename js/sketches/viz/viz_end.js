@@ -30,7 +30,6 @@
             p.fill(0);
             p.textAlign(p.CENTER, p.CENTER);
             p.textSize(38);
-            p.textStyle(p.BOLD);
             p.text('Thank you!', cx- 330, cy);
             p.textSize(30);
             p.textStyle(p.NORMAL);
